@@ -46,7 +46,7 @@ struct ContentView: View {
                             }
                             HStack {
                                 Spacer(minLength: 50)
-                                Text(bus.location)
+                                Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
                                     .font(.subheadline)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom, 5)
