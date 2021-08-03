@@ -12,6 +12,7 @@
 		812193BE26B9D1C2001C66D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 812193BD26B9D1C2001C66D2 /* Assets.xcassets */; };
 		812193C126B9D1C2001C66D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 812193C026B9D1C2001C66D2 /* Preview Assets.xcassets */; };
 		812193C826B9D42B001C66D2 /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812193C726B9D42B001C66D2 /* Bus.swift */; };
+		812193CD26B9D68F001C66D2 /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812193CC26B9D68F001C66D2 /* URLSessionExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		812193BD26B9D1C2001C66D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		812193C026B9D1C2001C66D2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		812193C726B9D42B001C66D2 /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		812193CC26B9D68F001C66D2 /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,9 +55,10 @@
 		812193B826B9D1C0001C66D2 /* BusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				812193CB26B9D67C001C66D2 /* Helpers */,
 				812193B926B9D1C0001C66D2 /* BusPlusApp.swift */,
-				812193BB26B9D1C0001C66D2 /* ContentView.swift */,
-				812193C726B9D42B001C66D2 /* Bus.swift */,
+				812193CA26B9D671001C66D2 /* Model */,
+				812193C926B9D668001C66D2 /* Views */,
 				812193BD26B9D1C2001C66D2 /* Assets.xcassets */,
 				812193BF26B9D1C2001C66D2 /* Preview Content */,
 			);
@@ -68,6 +71,30 @@
 				812193C026B9D1C2001C66D2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		812193C926B9D668001C66D2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				812193BB26B9D1C0001C66D2 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		812193CA26B9D671001C66D2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				812193C726B9D42B001C66D2 /* Bus.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		812193CB26B9D67C001C66D2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				812193CC26B9D68F001C66D2 /* URLSessionExtension.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				812193CD26B9D68F001C66D2 /* URLSessionExtension.swift in Sources */,
 				812193C826B9D42B001C66D2 /* Bus.swift in Sources */,
 				812193BC26B9D1C0001C66D2 /* ContentView.swift in Sources */,
 				812193BA26B9D1C0001C66D2 /* BusPlusApp.swift in Sources */,
