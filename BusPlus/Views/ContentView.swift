@@ -55,6 +55,26 @@ struct ContentView: View {
                         }
                         .background(Color.primary.colorInvert().opacity(0.8))
                     }
+                    VStack {
+                        
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Text("\(Image(systemName: "person.3.fill")) \(bus.passengers)")
+                                .bold()
+                                .multilineTextAlignment(.center)
+                                .padding(30)
+                                .background(Color.primary.colorInvert().opacity(0.8))
+                                .clipShape(Circle())
+                                .offset(x: 5, y: -15)
+                        }
+                        
+                        Spacer()
+                    }
+                    
+
+                    
                     
                 }
                 .listRowSeparator(.hidden)
