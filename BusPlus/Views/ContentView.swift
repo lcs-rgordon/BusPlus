@@ -24,7 +24,7 @@ struct ContentView: View {
     @State private var amount = ""
     
     @FocusState private var focusedField: Field?
-
+    
     var filteredBuses: [Bus] {
         if search.isEmpty {
             return buses
@@ -181,7 +181,7 @@ struct ContentView: View {
                                     Spacer(minLength: 50)
                                     Text("From: \(Text("**\(bus.location)**").foregroundColor(Color.blue))")
                                     Text("At \(Text("**\(bus.location)**").foregroundColor(Color.blue))\ngoing to \(Text("**\(bus.destination)**").foregroundColor(Color.purple))")
-//                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
+                                    //                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
                                         .font(.subheadline)
                                         .multilineTextAlignment(.center)
                                         .padding(.bottom, 5)
@@ -238,27 +238,37 @@ struct ContentView: View {
             NavigationView {
                 VStack {
                     
-                    Group {
-                        
-                        TextField("First name", text: $firstName)
-                            .focused($focusedField, equals: .firstName)
-                            .textContentType(.givenName)
-                            .submitLabel(.next)
-                        
-                        TextField("Last name", text: $lastName)
-                            .focused($focusedField, equals: .lastName)
-                            .textContentType(.familyName)
-                            .submitLabel(.next)
-                        
-                        TextField("Amount", text: $amount)
-                            .keyboardType(.decimalPad)
-                            .focused($focusedField, equals: .amount)
-                            .submitLabel(.done)
-                        
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 10)
-
+                    TextField("First name", text: $firstName)
+                        .focused($focusedField, equals: .firstName)
+                        .textContentType(.givenName)
+                        .submitLabel(.next)
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                    
+                    
+                    TextField("Last name", text: $lastName)
+                        .focused($focusedField, equals: .lastName)
+                        .textContentType(.familyName)
+                        .submitLabel(.next)
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                    
+                    
+                    TextField("Amount", text: $amount)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .amount)
+                        .submitLabel(.done)
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Button("Click me!") {
+                                    print("Clicked")
+                                }
+                                .disabled(focusedField == .amount ? false : true)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                    
                     Spacer()
                     
                 }
@@ -281,7 +291,7 @@ struct ContentView: View {
                     focusedField = nil
                 }
                 .navigationTitle("Tickets")
-
+                
             }
             .tabItem {
                 Image(systemName: "ticket.fill")
