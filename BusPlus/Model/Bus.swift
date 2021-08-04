@@ -13,4 +13,6 @@ struct Bus: Codable, Identifiable {
     let name, location, destination: String
     let passengers, fuel: Int
     let image: String
+    
+    
 }

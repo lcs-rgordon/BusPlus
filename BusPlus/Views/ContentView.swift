@@ -10,12 +10,25 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var buses = [Bus]()
+    @State private var search = ""
+    
+    var filteredBuses: [Bus] {
+        if search.isEmpty {
+            return buses
+        } else {
+            return buses.filter({ bus in
+                bus.name.localizedCaseInsensitiveContains(search) ||
+                bus.location.localizedCaseInsensitiveContains(search) ||
+                bus.destination.localizedCaseInsensitiveContains(search)
+            })
+        }
+    }
     
     var body: some View {
         
         NavigationView {
             
-            List(buses) { bus in
+            List(filteredBuses) { bus in
                 
                 ZStack {
                     
@@ -80,6 +93,7 @@ struct ContentView: View {
                 .listRowSeparator(.hidden)
                 
             }
+            .searchable(text: $search, prompt: "Name, location, or destination")
             .listStyle(PlainListStyle())
             .navigationTitle("Buses")
             .task {
