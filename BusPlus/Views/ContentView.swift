@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @State private var buses = [Bus]()
     @State private var search = ""
+    @State private var favouriteBuses = [Bus]()
     
     var filteredBuses: [Bus] {
         if search.isEmpty {
@@ -89,6 +90,28 @@ struct ContentView: View {
 
                     
                     
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    if favouriteBuses.contains(where: { currentBus in
+                        currentBus == bus
+                    }) {
+                        Button {
+                            let index = favouriteBuses.firstIndex(of: bus)!
+                            favouriteBuses.remove(at: index)
+                            print(favouriteBuses)
+                        } label: {
+                            Label("Remove from favourites", systemImage: "heart")
+                        }
+                        .tint(.gray)
+                    } else {
+                        Button {
+                            favouriteBuses.append(bus)
+                            print(favouriteBuses)
+                        } label: {
+                            Label("Add to favourites", systemImage: "heart.fill")
+                        }
+                        .tint(.pink)
+                    }
                 }
                 .listRowSeparator(.hidden)
                 

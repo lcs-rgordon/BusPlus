@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - BusElement
-struct Bus: Codable, Identifiable {
+struct Bus: Codable, Identifiable, Equatable {
     let id: Int
     let name, location, destination: String
     let passengers, fuel: Int
