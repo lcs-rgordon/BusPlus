@@ -83,13 +83,21 @@ struct ContentView: View {
             .listStyle(PlainListStyle())
             .navigationTitle("Buses")
             .task {
-                do {
-                    buses = try await fetchBuses()
-                } catch {
-                    print(error.localizedDescription)
-                }
+                await refreshBuses()
+            }
+            .refreshable {
+                print("refreshing")
+                await refreshBuses()
             }
             
+        }
+    }
+    
+    func refreshBuses() async {
+        do {
+            buses = try await fetchBuses()
+        } catch {
+            print(error.localizedDescription)
         }
     }
     

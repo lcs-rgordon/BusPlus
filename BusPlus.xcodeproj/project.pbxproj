@@ -55,8 +55,8 @@
 		812193B826B9D1C0001C66D2 /* BusPlus */ = {
 			isa = PBXGroup;
 			children = (
-				812193CB26B9D67C001C66D2 /* Helpers */,
 				812193B926B9D1C0001C66D2 /* BusPlusApp.swift */,
+				812193CB26B9D67C001C66D2 /* Helpers */,
 				812193CA26B9D671001C66D2 /* Model */,
 				812193C926B9D668001C66D2 /* Views */,
 				812193BD26B9D1C2001C66D2 /* Assets.xcassets */,
