@@ -255,22 +255,26 @@ struct ContentView: View {
                     
                     
                     TextField("Amount", text: $amount)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .amount)
                         .submitLabel(.done)
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Button("Click me!") {
-                                    print("Clicked")
-                                }
-                                .disabled(focusedField == .amount ? false : true)
-                            }
-                        }
                         .padding(.horizontal)
                         .padding(.vertical, 10)
-                    
+
                     Spacer()
                     
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        
+                        Spacer()
+                        
+                        Button("Done") {
+                            // Dismiss the keyboard
+                            focusedField = nil
+                        }
+                        .disabled(focusedField == .amount ? false : true)
+                    }
                 }
                 .onSubmit {
                     switch focusedField {
