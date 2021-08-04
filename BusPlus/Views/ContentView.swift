@@ -95,7 +95,11 @@ struct ContentView: View {
     
     func refreshBuses() async {
         do {
-            buses = try await fetchBuses()
+            let newBuses = try await fetchBuses()
+            
+            withAnimation {
+                buses = newBuses
+            }
         } catch {
             print(error.localizedDescription)
         }
