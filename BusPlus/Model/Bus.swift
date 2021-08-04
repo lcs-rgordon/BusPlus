@@ -14,5 +14,9 @@ struct Bus: Codable, Identifiable, Equatable {
     let passengers, fuel: Int
     let image: String
     
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     
 }
