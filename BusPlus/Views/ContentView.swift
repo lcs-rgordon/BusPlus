@@ -13,6 +13,18 @@ struct ContentView: View {
     @State private var search = ""
     @State private var favouriteBuses = [Bus]()
     
+    enum Field {
+        case firstName
+        case lastName
+        case amount
+    }
+    
+    @State private var firstName = ""
+    @State private var lastName = ""
+    @State private var amount = ""
+    
+    @FocusState private var focusedField: Field?
+
     var filteredBuses: [Bus] {
         if search.isEmpty {
             return buses
@@ -221,6 +233,59 @@ struct ContentView: View {
             .tabItem {
                 Image(systemName: "heart.fill")
                 Text("Favourites")
+            }
+            
+            NavigationView {
+                VStack {
+                    
+                    Group {
+                        
+                        TextField("First name", text: $firstName)
+                            .focused($focusedField, equals: .firstName)
+                            .textContentType(.givenName)
+                            .submitLabel(.next)
+                        
+                        TextField("Last name", text: $lastName)
+                            .focused($focusedField, equals: .lastName)
+                            .textContentType(.familyName)
+                            .submitLabel(.next)
+                        
+                        TextField("Amount", text: $amount)
+                            .keyboardType(.decimalPad)
+                            .focused($focusedField, equals: .amount)
+                            .submitLabel(.done)
+                        
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+
+                    Spacer()
+                    
+                }
+                .onSubmit {
+                    switch focusedField {
+                    case .firstName:
+                        focusedField = .lastName    // Transfer focus to the last name field
+                    case .lastName:
+                        focusedField = .amount    // Transfer focus to the last name field
+                    default:
+                        focusedField = nil  // All done, so go to no field next, and hide the keyboard
+                    }
+                }
+                .task {
+                    print("hello")
+                    focusedField = .firstName
+                }
+                // Dismiss the keyboard when something else is tapped
+                .onTapGesture {
+                    focusedField = nil
+                }
+                .navigationTitle("Tickets")
+
+            }
+            .tabItem {
+                Image(systemName: "ticket.fill")
+                Text("Tickets")
             }
         }
         
