@@ -167,7 +167,9 @@ struct ContentView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 50)
-                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
+                                    Text("From: \(Text("**\(bus.location)**").foregroundColor(Color.blue))")
+                                    Text("At \(Text("**\(bus.location)**").foregroundColor(Color.blue))\ngoing to \(Text("**\(bus.destination)**").foregroundColor(Color.purple))")
+//                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
                                         .font(.subheadline)
                                         .multilineTextAlignment(.center)
                                         .padding(.bottom, 5)
