@@ -75,7 +75,7 @@ struct ContentView: View {
                                 
                                 Spacer()
                                 
-                                Text("\(Image(systemName: "person.3.fill")) \(bus.passengers)")
+                                Text("\(Image(systemName: "person.3.fill").symbolRenderingMode(.hierarchical)) \(bus.passengers)")
                                     .bold()
                                     .multilineTextAlignment(.center)
                                     .padding(30)
