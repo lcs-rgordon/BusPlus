@@ -93,7 +93,7 @@ struct ContentView: View {
                 .listRowSeparator(.hidden)
                 
             }
-            .searchable(text: $search, prompt: "Name, location, or destination")
+            .searchable(text: $search.animation(), prompt: "Name, location, or destination")
             .listStyle(PlainListStyle())
             .navigationTitle("Buses")
             .task {
