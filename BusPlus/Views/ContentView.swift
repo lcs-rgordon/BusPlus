@@ -212,7 +212,7 @@ struct ContentView: View {
                     
                 }
                 .listStyle(PlainListStyle())
-                .navigationTitle("Buses")
+                .navigationTitle("Favourites")
                 
                 
             }
