@@ -26,75 +26,179 @@ struct ContentView: View {
     }
     
     var body: some View {
-        
-        NavigationView {
-            
-            List(filteredBuses) { bus in
+        TabView {
+            NavigationView {
                 
-                ZStack {
+                List(filteredBuses) { bus in
                     
-                    // See: https://swiftwithmajid.com/2021/07/07/mastering-asyncimage-in-swiftui/
-                    AsyncImage(url: URL(string: bus.image)) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .padding(0)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(width: 300, height: 200)
-                    .background(Color.gray)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .padding(0)
-                    
-                    VStack {
-                        Spacer()
+                    ZStack {
+                        
+                        // See: https://swiftwithmajid.com/2021/07/07/mastering-asyncimage-in-swiftui/
+                        AsyncImage(url: URL(string: bus.image)) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .padding(0)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(width: 300, height: 200)
+                        .background(Color.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding(0)
+                        
                         VStack {
+                            Spacer()
+                            VStack {
+                                HStack {
+                                    Spacer(minLength: 50)
+                                    Text(bus.name)
+                                        .bold()
+                                        .multilineTextAlignment(.center)
+                                        .padding(.top, 5)
+                                    Spacer(minLength: 50)
+                                }
+                                HStack {
+                                    Spacer(minLength: 50)
+                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
+                                        .font(.subheadline)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.bottom, 5)
+                                    Spacer(minLength: 50)
+                                }
+                            }
+                            .background(Color.primary.colorInvert().opacity(0.8))
+                        }
+                        VStack {
+                            
                             HStack {
-                                Spacer(minLength: 50)
-                                Text(bus.name)
+                                
+                                Spacer()
+                                
+                                Text("\(Image(systemName: "person.3.fill")) \(bus.passengers)")
                                     .bold()
                                     .multilineTextAlignment(.center)
-                                    .padding(.top, 5)
-                                Spacer(minLength: 50)
+                                    .padding(30)
+                                    .background(Color.primary.colorInvert().opacity(0.8))
+                                    .clipShape(Circle())
+                                    .offset(x: 5, y: -15)
                             }
-                            HStack {
-                                Spacer(minLength: 50)
-                                Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
-                                    .font(.subheadline)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.bottom, 5)
-                                Spacer(minLength: 50)
-                            }
-                        }
-                        .background(Color.primary.colorInvert().opacity(0.8))
-                    }
-                    VStack {
-                        
-                        HStack {
                             
                             Spacer()
-                            
-                            Text("\(Image(systemName: "person.3.fill")) \(bus.passengers)")
-                                .bold()
-                                .multilineTextAlignment(.center)
-                                .padding(30)
-                                .background(Color.primary.colorInvert().opacity(0.8))
-                                .clipShape(Circle())
-                                .offset(x: 5, y: -15)
                         }
                         
-                        Spacer()
+                        
+                        
+                        
                     }
-                    
-
-                    
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        if favouriteBuses.contains(where: { currentBus in
+                            currentBus == bus
+                        }) {
+                            Button {
+                                let index = favouriteBuses.firstIndex(of: bus)!
+                                favouriteBuses.remove(at: index)
+                                print(favouriteBuses)
+                            } label: {
+                                Label("Remove from favourites", systemImage: "heart")
+                            }
+                            .tint(.gray)
+                        } else {
+                            Button {
+                                favouriteBuses.append(bus)
+                                print(favouriteBuses)
+                            } label: {
+                                Label("Add to favourites", systemImage: "heart.fill")
+                            }
+                            .tint(.pink)
+                        }
+                    }
+                    .listRowSeparator(.hidden)
                     
                 }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    if favouriteBuses.contains(where: { currentBus in
-                        currentBus == bus
-                    }) {
+                .searchable(text: $search.animation(), prompt: "Name, location, or destination")
+                .listStyle(PlainListStyle())
+                .navigationTitle("Buses")
+                .task {
+                    await refreshBuses()
+                }
+                .refreshable {
+                    print("refreshing")
+                    await refreshBuses()
+                }
+                
+            }
+            .tabItem {
+                Image(systemName: "bus")
+                Text("Buses")
+            }
+            
+            NavigationView {
+                
+                
+                List(favouriteBuses) { bus in
+                    
+                    ZStack {
+                        
+                        // See: https://swiftwithmajid.com/2021/07/07/mastering-asyncimage-in-swiftui/
+                        AsyncImage(url: URL(string: bus.image)) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .padding(0)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(width: 300, height: 200)
+                        .background(Color.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding(0)
+                        
+                        VStack {
+                            Spacer()
+                            VStack {
+                                HStack {
+                                    Spacer(minLength: 50)
+                                    Text(bus.name)
+                                        .bold()
+                                        .multilineTextAlignment(.center)
+                                        .padding(.top, 5)
+                                    Spacer(minLength: 50)
+                                }
+                                HStack {
+                                    Spacer(minLength: 50)
+                                    Text("At **\(bus.location)**\ngoing to **\(bus.destination)**")
+                                        .font(.subheadline)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.bottom, 5)
+                                    Spacer(minLength: 50)
+                                }
+                            }
+                            .background(Color.primary.colorInvert().opacity(0.8))
+                        }
+                        VStack {
+                            
+                            HStack {
+                                
+                                Spacer()
+                                
+                                Text("\(Image(systemName: "person.3.fill")) \(bus.passengers)")
+                                    .bold()
+                                    .multilineTextAlignment(.center)
+                                    .padding(30)
+                                    .background(Color.primary.colorInvert().opacity(0.8))
+                                    .clipShape(Circle())
+                                    .offset(x: 5, y: -15)
+                            }
+                            
+                            Spacer()
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button {
                             let index = favouriteBuses.firstIndex(of: bus)!
                             favouriteBuses.remove(at: index)
@@ -103,31 +207,21 @@ struct ContentView: View {
                             Label("Remove from favourites", systemImage: "heart")
                         }
                         .tint(.gray)
-                    } else {
-                        Button {
-                            favouriteBuses.append(bus)
-                            print(favouriteBuses)
-                        } label: {
-                            Label("Add to favourites", systemImage: "heart.fill")
-                        }
-                        .tint(.pink)
                     }
+                    .listRowSeparator(.hidden)
+                    
                 }
-                .listRowSeparator(.hidden)
+                .listStyle(PlainListStyle())
+                .navigationTitle("Buses")
+                
                 
             }
-            .searchable(text: $search.animation(), prompt: "Name, location, or destination")
-            .listStyle(PlainListStyle())
-            .navigationTitle("Buses")
-            .task {
-                await refreshBuses()
+            .tabItem {
+                Image(systemName: "heart.fill")
+                Text("Favourites")
             }
-            .refreshable {
-                print("refreshing")
-                await refreshBuses()
-            }
-            
         }
+        
     }
     
     func refreshBuses() async {
